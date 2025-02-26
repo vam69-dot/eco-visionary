@@ -1,7 +1,9 @@
 
 import { Globe, Users, Shield } from "lucide-react";
+import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import ESGSection from "@/components/ESGSection";
+import { LampContainer } from "@/components/ui/lamp";
 
 const Index = () => {
   return (
@@ -9,22 +11,25 @@ const Index = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center pt-16">
-        <div className="container px-4 mx-auto text-center">
-          <div className="max-w-3xl mx-auto">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
-              AI-Powered ESG Solutions
-            </h1>
-            <p className="text-xl text-muted-foreground mb-8">
-              Transforming environmental, social, and governance initiatives with advanced artificial intelligence.
-            </p>
-            <div className="inline-flex p-1 glass rounded-full animate-float">
-              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
-                <Globe className="w-8 h-8 text-primary" />
-              </div>
-            </div>
-          </div>
-        </div>
+      <section className="min-h-screen">
+        <LampContainer>
+          <motion.h1
+            initial={{ opacity: 0.5, y: 100 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{
+              delay: 0.3,
+              duration: 0.8,
+              ease: "easeInOut",
+            }}
+            className="mt-8 bg-gradient-to-br from-foreground to-muted-foreground py-4 bg-clip-text text-center text-4xl font-medium tracking-tight text-transparent md:text-7xl"
+          >
+            AI-Powered ESG Solutions
+            <br />
+            <span className="text-2xl md:text-4xl font-normal mt-4 block text-muted-foreground">
+              Transforming environmental, social, and governance initiatives
+            </span>
+          </motion.h1>
+        </LampContainer>
       </section>
 
       {/* ESG Sections */}
