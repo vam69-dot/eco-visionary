@@ -30,10 +30,17 @@ const Index = () => {
               Transforming environmental, social, and governance initiatives
             </span>
             <div className="flex items-center justify-center gap-4 mt-8">
-              <Button size="lg" className="text-lg">
+              <Button 
+                size="lg" 
+                className="text-lg bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-200"
+              >
                 Get Started
               </Button>
-              <Button size="lg" variant="outline" className="text-lg">
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="text-lg bg-gradient-to-r from-[#0c1d33] to-[#0a1c2e] hover:from-[#142c4b] hover:to-[#0f2844] text-white border border-white/20 shadow-lg hover:shadow-xl transition-all duration-200"
+              >
                 Book Demo
               </Button>
             </div>
