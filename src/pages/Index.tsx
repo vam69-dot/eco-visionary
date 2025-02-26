@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import ESGSection from "@/components/ESGSection";
 import { LampContainer } from "@/components/ui/lamp";
+import { Button } from "@/components/ui/button";
 
 const Index = () => {
   return (
@@ -28,6 +29,14 @@ const Index = () => {
             <span className="text-2xl md:text-4xl font-normal mt-4 block text-muted-foreground">
               Transforming environmental, social, and governance initiatives
             </span>
+            <div className="flex items-center justify-center gap-4 mt-8">
+              <Button size="lg" className="text-lg">
+                Get Started
+              </Button>
+              <Button size="lg" variant="outline" className="text-lg">
+                Book Demo
+              </Button>
+            </div>
           </motion.h1>
         </LampContainer>
       </section>
