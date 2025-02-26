@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import ESGSection from "@/components/ESGSection";
 import { LampContainer } from "@/components/ui/lamp";
+import { GradientButton } from "@/components/ui/gradient-button";
 
 const Index = () => {
   return (
@@ -28,6 +29,18 @@ const Index = () => {
             <span className="text-2xl md:text-4xl font-normal mt-4 block text-muted-foreground">
               Transforming environmental, social, and governance initiatives
             </span>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.5,
+                duration: 0.8,
+                ease: "easeInOut",
+              }}
+              className="mt-8 flex justify-center"
+            >
+              <GradientButton>Get Started</GradientButton>
+            </motion.div>
           </motion.h1>
         </LampContainer>
       </section>
