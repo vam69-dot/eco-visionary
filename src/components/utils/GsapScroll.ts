@@ -6,16 +6,13 @@ export function setCharTimeline(
   character: THREE.Object3D<THREE.Object3DEventMap> | null,
   camera: THREE.PerspectiveCamera
 ) {
-  let intensity: number = 0;
-  setInterval(() => {
-    intensity = Math.random();
-  }, 200);
+  // Remove unused intensity variable
   
   // Replace GSAP ScrollTrigger with Framer Motion's inView
   if (character) {
     // Landing section animations
-    inView(".landing-section", ({ target }) => {
-      const progress = (entry: IntersectionObserverEntry) => {
+    inView(".landing-section", () => {
+      return (entry: IntersectionObserverEntry) => {
         const ratio = 1 - entry.intersectionRatio;
         if (character) {
           character.rotation.y = ratio * 0.7;
@@ -38,14 +35,10 @@ export function setCharTimeline(
           (characterModel as HTMLElement).style.transform = `translateX(${ratio * -25}%)`;
         }
       };
-      
-      return (entry: IntersectionObserverEntry) => {
-        progress(entry);
-      };
     });
     
     // About section animations
-    inView(".about-section", ({ target }) => {
+    inView(".about-section", () => {
       let screenLight: any, monitor: any;
       character.children.forEach((object: any) => {
         if (object.name === "Plane004") {
@@ -137,7 +130,7 @@ export function setCharTimeline(
     });
     
     // What I Do section animations
-    inView(".whatIDO", ({ target }) => {
+    inView(".whatIDO", () => {
       return (entry: IntersectionObserverEntry) => {
         if (entry.isIntersecting) {
           animate(".character-model", 
@@ -160,10 +153,11 @@ export function setCharTimeline(
   } else {
     // Mobile view adaptations
     if (window.innerWidth <= 1024) {
-      inView(".what-box-in", ({ target }) => {
+      inView(".what-box-in", () => {
         return (entry: IntersectionObserverEntry) => {
           if (entry.isIntersecting) {
-            (target as HTMLElement).style.display = "flex";
+            const element = entry.target as HTMLElement;
+            element.style.display = "flex";
           }
         };
       });
@@ -173,7 +167,7 @@ export function setCharTimeline(
 
 export function setAllTimeline() {
   // Career section animations
-  inView(".career-section", ({ target }) => {
+  inView(".career-section", () => {
     return (entry: IntersectionObserverEntry) => {
       if (entry.isIntersecting) {
         // Animate timeline
