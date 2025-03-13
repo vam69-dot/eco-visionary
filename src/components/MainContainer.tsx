@@ -18,13 +18,19 @@ const MainContainer = ({ children }: PropsWithChildren) => {
     window.innerWidth > 1024
   );
 
+  // Add console log for debugging
   useEffect(() => {
+    console.log("MainContainer mounted");
+    
     const resizeHandler = () => {
+      console.log("Resize event triggered");
       setSplitText();
       setIsDesktopView(window.innerWidth > 1024);
     };
+    
     resizeHandler();
     window.addEventListener("resize", resizeHandler);
+    
     return () => {
       window.removeEventListener("resize", resizeHandler);
     };
@@ -45,7 +51,7 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <Career />
             <Work />
             {isDesktopView && (
-              <Suspense fallback={<div>Loading....</div>}>
+              <Suspense fallback={<div>Loading Tech Stack...</div>}>
                 <TechStack />
               </Suspense>
             )}

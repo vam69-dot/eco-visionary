@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
@@ -10,18 +11,39 @@ const Loading = ({ percent }: { percent: number }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
 
-  if (percent >= 100) {
-    setTimeout(() => {
-      setLoaded(true);
+  // Add debug log
+  useEffect(() => {
+    console.log("Loading component - percent:", percent);
+  }, [percent]);
+
+  useEffect(() => {
+    // Ensure loading completes even if model loading takes too long
+    const timeout = setTimeout(() => {
+      if (percent < 100) {
+        console.log("Loading timeout - forcing completion");
+        setLoaded(true);
+        setTimeout(() => setIsLoaded(true), 1000);
+      }
+    }, 10000); // 10 second timeout
+
+    if (percent >= 100) {
+      console.log("Loading complete - percent reached 100");
+      clearTimeout(timeout);
       setTimeout(() => {
-        setIsLoaded(true);
-      }, 1000);
-    }, 600);
-  }
+        setLoaded(true);
+        setTimeout(() => {
+          setIsLoaded(true);
+        }, 1000);
+      }, 600);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [percent]);
 
   useEffect(() => {
     import("./utils/initialFX").then((module) => {
       if (isLoaded) {
+        console.log("initialFX about to be called");
         setClicked(true);
         setTimeout(() => {
           if (module.initialFX) {
@@ -31,7 +53,7 @@ const Loading = ({ percent }: { percent: number }) => {
         }, 900);
       }
     });
-  }, [isLoaded]);
+  }, [isLoaded, setIsLoading]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     const { currentTarget: target } = e;
@@ -41,6 +63,12 @@ const Loading = ({ percent }: { percent: number }) => {
     target.style.setProperty("--mouse-x", `${x}px`);
     target.style.setProperty("--mouse-y", `${y}px`);
   }
+
+  // Add a way to force loading completion
+  const forceComplete = () => {
+    setLoaded(true);
+    setTimeout(() => setIsLoaded(true), 500);
+  };
 
   return (
     <>
@@ -69,6 +97,7 @@ const Loading = ({ percent }: { percent: number }) => {
         <div
           className={`loading-wrap ${clicked && "loading-clicked"}`}
           onMouseMove={(e) => handleMouseMove(e)}
+          onClick={forceComplete} // Allow clicking to force completion
         >
           <div className="loading-hover"></div>
           <div className={`loading-button ${loaded && "loading-complete"}`}>

@@ -22,12 +22,17 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
   const [loading, setLoading] = useState(0);
   const [progressHandler, setProgressHandler] = useState<any>(null);
 
+  // Add debug logs
   useEffect(() => {
+    console.log("LoadingProvider mounted");
+    
     if (!progressHandler) {
+      console.log("Setting up progress handler");
       setProgressHandler(setProgress(setLoading));
     }
     
     const handleLoad = async () => {
+      console.log("Window load event or document already complete");
       if (progressHandler && progressHandler.loaded) {
         await progressHandler.loaded();
       }
@@ -41,6 +46,18 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
     }
   }, [progressHandler]);
 
+  // Add a timeout to prevent infinite loading
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (isLoading) {
+        console.log("Loading timeout triggered - forcing completion");
+        setIsLoading(false);
+      }
+    }, 15000); // 15 second fallback
+
+    return () => clearTimeout(timeout);
+  }, [isLoading]);
+
   const value = {
     isLoading,
     setIsLoading,
@@ -50,7 +67,7 @@ export const LoadingProvider = ({ children }: PropsWithChildren) => {
   return (
     <LoadingContext.Provider value={value as LoadingType}>
       {isLoading && <Loading percent={loading} />}
-      <main className="main-body">{children}</main>
+      <main className="main-body" style={{ opacity: isLoading ? 0 : 1 }}>{children}</main>
     </LoadingContext.Provider>
   );
 };

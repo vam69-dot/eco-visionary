@@ -1,3 +1,4 @@
+
 .section-container {
   width: 1300px;
 }
@@ -9,6 +10,22 @@
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
+
+/* Add visible loading fallback styles */
+.loading-fallback {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #0b080c;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1000;
+}
+
 @media only screen and (max-width: 1600px) {
   .section-container {
     width: 1200px;
