@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import setCharacter from "./utils/character";
@@ -81,7 +82,10 @@ const Scene = () => {
       const onMouseMove = (event: MouseEvent) => {
         handleMouseMove(event, (x, y) => (mouse = { x, y }));
       };
-      let debounce: number | undefined;
+      
+      // Fix: change the type of debounce from Timeout to NodeJS.Timeout
+      let debounce: NodeJS.Timeout | undefined;
+      
       const onTouchStart = (event: TouchEvent) => {
         const element = event.target as HTMLElement;
         debounce = setTimeout(() => {
