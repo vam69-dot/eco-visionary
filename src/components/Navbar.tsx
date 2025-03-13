@@ -1,72 +1,80 @@
+import { useEffect } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import HoverLinks from "./HoverLinks";
+import { gsap } from "gsap";
+import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
+import "./styles/Navbar.css";
 
-import { useState, useEffect } from "react";
-import { Moon, Sun, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
+export let smoother: ScrollSmoother;
 
 const Navbar = () => {
-  const [isDark, setIsDark] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDark]);
+    smoother = ScrollSmoother.create({
+      wrapper: "#smooth-wrapper",
+      content: "#smooth-content",
+      smooth: 1.7,
+      speed: 1.7,
+      effects: true,
+      autoResize: true,
+      ignoreMobileResize: true,
+    });
 
-  const toggleTheme = () => setIsDark(!isDark);
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+    smoother.scrollTop(0);
+    smoother.paused(true);
 
+    let links = document.querySelectorAll(".header ul a");
+    links.forEach((elem) => {
+      let element = elem as HTMLAnchorElement;
+      element.addEventListener("click", (e) => {
+        if (window.innerWidth > 1024) {
+          e.preventDefault();
+          let elem = e.currentTarget as HTMLAnchorElement;
+          let section = elem.getAttribute("data-href");
+          smoother.scrollTo(section, true, "top top");
+        }
+      });
+    });
+    window.addEventListener("resize", () => {
+      ScrollSmoother.refresh(true);
+    });
+  }, []);
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          <a href="/" className="text-xl font-semibold">
-            ESG AI
-          </a>
-
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-4">
-            <a href="#environmental" className="nav-item">Environmental</a>
-            <a href="#social" className="nav-item">Social</a>
-            <a href="#governance" className="nav-item">Governance</a>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="ml-4"
-            >
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={toggleMenu}>
-              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden pb-4 animate-fadeIn">
-            <a href="#environmental" className="block nav-item mb-2">Environmental</a>
-            <a href="#social" className="block nav-item mb-2">Social</a>
-            <a href="#governance" className="block nav-item mb-2">Governance</a>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              className="w-full justify-center nav-item"
-            >
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
-            </Button>
-          </div>
-        )}
+    <>
+      <div className="header">
+        <a href="/#" className="navbar-title" data-cursor="disable">
+          Logo
+        </a>
+        <a
+          href="mailto:example@mail.com"
+          className="navbar-connect"
+          data-cursor="disable"
+        >
+          example@mail.com
+        </a>
+        <ul>
+          <li>
+            <a data-href="#about" href="#about">
+              <HoverLinks text="ABOUT" />
+            </a>
+          </li>
+          <li>
+            <a data-href="#work" href="#work">
+              <HoverLinks text="WORK" />
+            </a>
+          </li>
+          <li>
+            <a data-href="#contact" href="#contact">
+              <HoverLinks text="CONTACT" />
+            </a>
+          </li>
+        </ul>
       </div>
-    </nav>
+
+      <div className="landing-circle1"></div>
+      <div className="landing-circle2"></div>
+      <div className="nav-fade"></div>
+    </>
   );
 };
 

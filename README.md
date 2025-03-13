@@ -1,69 +1,74 @@
-# Welcome to your Lovable project
+# My Portfolio Website - Overview 🚀
 
-## Project info
+This repository contains the open source version of my 3D portfolio website. Do check it out!
 
-**URL**: https://lovable.dev/projects/05190abb-992b-46d9-9f7a-0e21074178af
+## Instructions 🛠️
 
-## How can I edit this code?
+I have modified the GSAP club plugins with the trial plugins, but with the trial plugin, you cannot host it⛔️. For Club plugins, check out here: [GSAP Installation](https://gsap.com/docs/v3/Installation/).
 
-There are several ways of editing your application.
+**Techstack** - React, TypeScript, GSAP, ThreeJS, WebGL, HTML, CSS, JavaScript
 
-**Use Lovable**
+### Installation
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/05190abb-992b-46d9-9f7a-0e21074178af) and start prompting.
+1. Clone the repository to your local machine:
 
-Changes made via Lovable will be committed automatically to this repo.
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
 
-**Use your preferred IDE**
+2. Install the required packages:
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+   ```bash
+   npm install
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+3. Install React:
 
-Follow these steps:
+   ```bash
+   npm i react
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+4. Install GSAP for React:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+   You can choose to install GSAP specifically for React or the general GSAP package:
 
-# Step 3: Install the necessary dependencies.
-npm i
+   For React:
+   ```bash
+   npm i gsap/react
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+   Or the general GSAP package:
+   ```bash
+   npm i gsap
+   ```
 
-**Edit a file directly in GitHub**
+5. Run the development server:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+   ```bash
+   npm run dev
+   ```
 
-**Use GitHub Codespaces**
+Open your browser and navigate to `http://localhost:3000` to view the website.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Features
 
-## What technologies are used for this project?
+- 3D interactive UI built with ThreeJS and WebGL
+- Smooth animations using GSAP
+- Responsive design for various screen sizes
 
-This project is built with .
+## Contributing
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Contributions are welcome! Please follow these steps:
 
-## How can I deploy this project?
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Commit your changes (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Open a pull request.
 
-Simply open [Lovable](https://lovable.dev/projects/05190abb-992b-46d9-9f7a-0e21074178af) and click on Share -> Publish.
+## License
 
-## I want to use a custom domain - is that possible?
+This project is licensed under the MIT License. See the LICENSE file for details.
+ 
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
