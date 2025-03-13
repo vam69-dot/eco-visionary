@@ -1,3 +1,4 @@
+
 import {
   createContext,
   PropsWithChildren,
@@ -6,6 +7,7 @@ import {
   useState,
 } from "react";
 import Loading from "../components/Loading";
+import { setProgress } from "../components/Loading";
 
 interface LoadingType {
   isLoading: boolean;
@@ -18,13 +20,32 @@ export const LoadingContext = createContext<LoadingType | null>(null);
 export const LoadingProvider = ({ children }: PropsWithChildren) => {
   const [isLoading, setIsLoading] = useState(true);
   const [loading, setLoading] = useState(0);
+  const [progressHandler, setProgressHandler] = useState<any>(null);
+
+  useEffect(() => {
+    if (!progressHandler) {
+      setProgressHandler(setProgress(setLoading));
+    }
+    
+    const handleLoad = async () => {
+      if (progressHandler && progressHandler.loaded) {
+        await progressHandler.loaded();
+      }
+    };
+
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
+    }
+  }, [progressHandler]);
 
   const value = {
     isLoading,
     setIsLoading,
     setLoading,
   };
-  useEffect(() => {}, [loading]);
 
   return (
     <LoadingContext.Provider value={value as LoadingType}>

@@ -1,3 +1,4 @@
+
 import { lazy, Suspense } from "react";
 import "./App.css";
 
@@ -7,17 +8,15 @@ import { LoadingProvider } from "./context/LoadingProvider";
 
 const App = () => {
   return (
-    <>
-      <LoadingProvider>
-        <Suspense>
-          <MainContainer>
-            <Suspense>
-              <CharacterModel />
-            </Suspense>
-          </MainContainer>
-        </Suspense>
-      </LoadingProvider>
-    </>
+    <LoadingProvider>
+      <Suspense fallback={<div>Loading...</div>}>
+        <MainContainer>
+          <Suspense fallback={<div>Loading 3D Model...</div>}>
+            <CharacterModel />
+          </Suspense>
+        </MainContainer>
+      </Suspense>
+    </LoadingProvider>
   );
 };
 
