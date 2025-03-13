@@ -1,25 +1,32 @@
+
 import { useEffect } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
-import { gsap } from "gsap";
-import { ScrollSmoother } from "gsap-trial/ScrollSmoother";
 import "./styles/Navbar.css";
 
-gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
-export let smoother: ScrollSmoother;
+export const smoother = {
+  paused: (state: boolean) => {
+    const content = document.getElementById("smooth-content");
+    if (content) {
+      content.style.overflow = state ? "hidden" : "visible";
+    }
+  },
+  scrollTop: (position: number) => {
+    window.scrollTo({ top: position, behavior: 'smooth' });
+  },
+  scrollTo: (selector: string | null, immediately = false, align = "center") => {
+    if (!selector) return;
+    const element = document.querySelector(selector);
+    if (!element) return;
+    
+    element.scrollIntoView({
+      behavior: immediately ? 'auto' : 'smooth',
+      block: align.includes('top') ? 'start' : 'center'
+    });
+  }
+};
 
 const Navbar = () => {
   useEffect(() => {
-    smoother = ScrollSmoother.create({
-      wrapper: "#smooth-wrapper",
-      content: "#smooth-content",
-      smooth: 1.7,
-      speed: 1.7,
-      effects: true,
-      autoResize: true,
-      ignoreMobileResize: true,
-    });
-
     smoother.scrollTop(0);
     smoother.paused(true);
 
@@ -35,10 +42,14 @@ const Navbar = () => {
         }
       });
     });
-    window.addEventListener("resize", () => {
-      ScrollSmoother.refresh(true);
-    });
+    
+    // Add scroll behavior
+    const smoothContent = document.getElementById("smooth-content");
+    if (smoothContent) {
+      smoothContent.style.scrollBehavior = "smooth";
+    }
   }, []);
+  
   return (
     <>
       <div className="header">

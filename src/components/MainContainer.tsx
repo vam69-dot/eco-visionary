@@ -1,3 +1,4 @@
+
 import { lazy, PropsWithChildren, Suspense, useEffect, useState } from "react";
 import About from "./About";
 import Career from "./Career";
@@ -35,8 +36,8 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       <Navbar />
       <SocialIcons />
       {isDesktopView && children}
-      <div id="smooth-wrapper">
-        <div id="smooth-content">
+      <div id="smooth-wrapper" style={{ position: 'relative', overflow: 'hidden', width: '100%', height: '100vh' }}>
+        <div id="smooth-content" style={{ overflow: 'auto', height: '100vh' }}>
           <div className="container-main">
             <Landing>{!isDesktopView && children}</Landing>
             <About />
